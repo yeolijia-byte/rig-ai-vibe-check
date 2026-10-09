@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RIG AI VIBE CHECK 🤖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #FAF6F0;
+            --card-bg: #FFFFFF;
+            --primary-amber: #E65100;
+            --primary-light: #FFF3E0;
+            --text-dark: #2C2C2C;
+            --text-muted: #666666;
+            --border-color: #E0D7CD;
+            --accent-toast: #FF9800;
+            --accent-prata: #8D6E63;
+            --accent-kopi: #4E342E;
+            --accent-nasi: #2E7D32;
+            --accent-ice: #0288D1;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --shadow-soft: 0 8px 30px rgba(0,0,0,0.06);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .quiz-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--primary-light);
+            color: var(--primary-amber);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .cover-title {
+            font-size: 2rem;
+            line-height: 1.2;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .cover-desc {
+            font-size: 1rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 28px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--primary-amber);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: var(--radius-md);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s ease, background 0.2s ease;
+            box-shadow: 0 4px 14px rgba(230, 81, 0, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        /* Progress Bar */
+        .progress-bar-wrap {
+            width: 100%;
+            height: 8px;
+            background: #EFEBE6;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary-amber);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .q-meta {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary-amber);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .q-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            line-height: 1.35;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .option-card {
+            background: #FAFAFA;
+            border: 2px solid #EFEBE6;
+            padding: 14px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .option-card:hover, .option-card:active {
+            border-color: var(--primary-amber);
+            background: var(--primary-light);
+        }
+
+        .option-card.selected {
+            border-color: var(--primary-amber);
+            background: var(--primary-light);
+            font-weight: 600;
+        }
+
+        /* Results Card */
+        .result-badge {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .siew-dai-badge {
+            background: #EFEBE6;
+            color: var(--accent-kopi);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 12px;
+        }
+
+        .result-title {
+            font-size: 1.8rem;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        .result-tagline {
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            font-size: 1rem;
+        }
+
+        .result-box {
+            background: #FAF8F5;
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 16px;
+            border: 1px solid #EFEBE6;
+        }
+
+        .result-box h4 {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .result-box p {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: var(--text-dark);
+        }
+
+        .action-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            background: #EFEBE6;
+            color: var(--text-dark);
+            border: none;
+            padding: 14px;
+            border-radius: var(--radius-md);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <!-- COVER VIEW -->
+    <div id="view-cover">
+        <div class="header-badge">RIG AI VIBE CHECK</div>
+        <h1 class="cover-title">What's Your AI Alter Ego? 🤖</h1>
+        <p class="cover-desc">Take this quick, honest 8-question quiz to discover your AI Kopitiam vibe!</p>
+        <button class="btn-primary" onclick="startQuiz()">Take the Quiz</button>
+    </div>
+
+    <!-- QUIZ VIEW -->
+    <div id="view-quiz" class="hidden">
+        <div class="progress-bar-wrap">
+            <div id="progress-fill" class="progress-bar-fill"></div>
+        </div>
+        <div id="q-meta" class="q-meta">Question 1 of 8</div>
+        <div id="q-text" class="q-text">Loading question...</div>
+        <div id="options-list" class="options-list"></div>
+    </div>
+
+    <!-- RESULT VIEW -->
+    <div id="view-result" class="hidden">
+        <div class="header-badge">Your Result</div>
+        <div id="siew-dai-tag" class="siew-dai-badge hidden">☕ Kopi Siew Dai Edition</div>
+        <h2 id="res-title" class="result-title">Curious Kaya Toast 🍞</h2>
+        <div id="res-tagline" class="result-tagline">"Wait, AI can do that too?"</div>
+
+        <div class="result-box">
+            <h4>Your Vibe</h4>
+            <p id="res-vibe">Loading...</p>
+        </div>
+
+        <div class="result-box">
+            <h4>Superpower</h4>
+            <p id="res-power">Loading...</p>
+        </div>
+
+        <div class="result-box">
+            <h4>Kopitiam Order</h4>
+            <p id="res-order">Loading...</p>
+        </div>
+
+        <div class="action-btns">
+            <button class="btn-primary" onclick="shareResult()">Share My Mascot 📤</button>
+            <button class="btn-secondary" onclick="resetQuiz()">Retake Quiz 🔄</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const originalQuestions = [
+        {
+            q: "Your colleague proudly announces, “I used AI to write this entire report!” Your first thought?",
+            options: [
+                { text: "“Wait, how did you get AI to do that?”", trait: "kaya" },
+                { text: "“Interesting… maybe I should try it for my next report.”", trait: "prata" },
+                { text: "“But how do you know the information is correct?”", trait: "kopi" },
+                { text: "“Great, does that mean fewer reports for the rest of us?”", trait: "nasi" },
+                { text: "“If AI can write entire reports, what will they need us for?”", trait: "kaya", apprehension: 1 }
+            ]
+        },
+        {
+            q: "You've been staring at a blank document for 15 minutes. The cursor is winning. What now?",
+            options: [
+                { text: "Ask AI for some ideas. Surely it can come up with something.", trait: "kaya" },
+                { text: "Give AI a few different instructions and see what works.", trait: "prata" },
+                { text: "Find a previous document. At least you know that one worked.", trait: "kopi" },
+                { text: "Wonder if AI could take care of the first draft next time.", trait: "nasi" },
+                { text: "Ask a colleague for ideas. Sometimes a human conversation works better.", trait: "ice" }
+            ]
+        },
+        {
+            q: "AI gives you a beautifully written answer. Almost suspiciously good. You…",
+            options: [
+                { text: "“Impressive. I wonder what else it knows.”", trait: "kaya" },
+                { text: "Ask the same question differently to see if the answer changes.", trait: "prata" },
+                { text: "“Looks convincing, but I'm checking the facts myself.”", trait: "kopi" },
+                { text: "“This could be useful, as long as someone reviews it.”", trait: "nasi" },
+                { text: "“This is exactly what worries me. How would I know if it's making things up?”", trait: "kopi", apprehension: 1 }
+            ]
+        },
+        {
+            q: "Your department introduces a new AI tool. You have 15 minutes to explore it. What's your move?",
+            options: [
+                { text: "Click around and see what interesting things it can do.", trait: "kaya" },
+                { text: "Test it with a few random tasks, just for fun.", trait: "prata" },
+                { text: "Try a task you already know well and compare the results.", trait: "kopi" },
+                { text: "Look for something that could save you time at work.", trait: "nasi" },
+                { text: "“Another new tool? I'll figure it out when I actually need it.”", trait: "ice" }
+            ]
+        },
+        {
+            q: "AI just helped you complete a task in 10 minutes instead of an hour. Your reaction?",
+            options: [
+                { text: "“Wow. What else can this thing do?”", trait: "kaya" },
+                { text: "“Let's try it on something more complicated!”", trait: "prata" },
+                { text: "“That's fast, but is the quality actually as good?”", trait: "kopi" },
+                { text: "“Imagine how much time the whole team could save.”", trait: "nasi" },
+                { text: "“That's impressive… but should I be worried that it can do my work?”", trait: "nasi", apprehension: 1 }
+            ]
+        },
+        {
+            q: "A colleague says, “I don't really know how to use AI.” You respond…",
+            options: [
+                { text: "“Neither did I! There's actually quite a lot to discover.”", trait: "kaya" },
+                { text: "“Let's try it together. We can figure it out as we go.”", trait: "prata" },
+                { text: "“It's useful, but don't believe everything it tells you.”", trait: "kopi" },
+                { text: "“You don't need to use it for everything. Just start with one task.”", trait: "nasi" },
+                { text: "“Honestly, I'm still figuring it out too. Sometimes the old way is easier.”", trait: "ice" }
+            ]
+        },
+        {
+            q: "Imagine AI becomes your new colleague. What's your working relationship like?",
+            options: [
+                { text: "The curious pair who keep asking each other questions.", trait: "kaya" },
+                { text: "The experimental duo who try five different ways to solve one problem.", trait: "prata" },
+                { text: "The cautious partnership where you double-check everything AI produces.", trait: "kopi" },
+                { text: "The productivity team that divides up tasks to get things done faster.", trait: "nasi" },
+                { text: "The slightly awkward colleagues who are still figuring out who's supposed to do what.", trait: "ice", apprehension: 1 }
+            ]
+        },
+        {
+            q: "Your boss announces, “Next week, everyone will share one thing they've learned about AI.” Your reaction?",
+            options: [
+                { text: "“I've seen something interesting. I could share that.”", trait: "kaya" },
+                { text: "“Perfect excuse to try something new this week!”", trait: "prata" },
+                { text: "“I have a few examples of where AI got things wrong.”", trait: "kopi" },
+                { text: "“I can show how AI helped me save time on a task.”", trait: "nasi" },
+                { text: "“Does learning that AI might replace parts of my job count?”", trait: "ice", apprehension: 1 }
+            ]
+        }
+    ];
+
+    const mascots = {
+        kaya: {
+            title: "Curious Kaya Toast 🍞",
+            tagline: "“Wait, AI can do that too?”",
+            vibe: "You are naturally inquisitive about what AI can do. You’re always asking questions and noticing new possibilities that others miss.",
+            power: "Spotting interesting new possibilities.",
+            order: "Kaya Toast Set — classic, dependable, and always sparking morning chats!"
+        },
+        prata: {
+            title: "Prata Tinkerer 🫓",
+            tagline: "“What happens if I try it this way?”",
+            vibe: "You learn by doing! You jump straight in, changing prompts and flipping setups to see what works best.",
+            power: "Rapid trial-and-error experimentation.",
+            order: "Roti Prata (Double Egg, Extra Crisp) — custom-built by trying new setups!"
+        },
+        kopi: {
+            title: "Kopi Detective ☕",
+            tagline: "“Something doesn't add up…”",
+            vibe: "You are the reality check for your team. You double-check facts, cross-examine sources, and uphold high quality standards.",
+            power: "Spotting mistakes and checking information.",
+            order: "Kopi-O Gao — strong, direct, and zero sugarcoating."
+        },
+        nasi: {
+            title: "Nasi Lemak Ninja 🪔",
+            tagline: "“There HAS to be an easier way!”",
+            vibe: "You look at work through practical efficiency. You want AI to streamline repetitive tasks so everyone saves time.",
+            power: "Turning AI ideas into practical time-saving improvements.",
+            order: "Nasi Lemak Special — everything organized neatly into an efficient set."
+        },
+        ice: {
+            title: "Ice Kachang Chameleon 🍧",
+            tagline: "“New way of working? I'll figure it out!”",
+            vibe: "You take workplace shifts in stride. You adapt flexibly and comfortably as technology evolves.",
+            power: "Adapting and learning along the way.",
+            order: "Ice Kachang — colorful, layered, and ready for whatever topping comes next!"
+        }
+    };
+
+    let currentQ = 0;
+    let scores = { kaya: 0, prata: 0, kopi: 0, nasi: 0, ice: 0 };
+    let apprehension = 0;
+    let randomizedQuestions = [];
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function startQuiz() {
+        scores = { kaya: 0, prata: 0, kopi: 0, nasi: 0, ice: 0 };
+        apprehension = 0;
+        currentQ = 0;
+        randomizedQuestions = originalQuestions.map(qObj => ({
+            q: qObj.q,
+            options: shuffleArray(qObj.options)
+        }));
+
+        document.getElementById('view-cover').classList.add('hidden');
+        document.getElementById('view-quiz').classList.remove('hidden');
+        renderQuestion();
+    }
+
+    function renderQuestion() {
+        const qData = randomizedQuestions[currentQ];
+        document.getElementById('progress-fill').style.width = `${((currentQ + 1) / 8) * 100}%`;
+        document.getElementById('q-meta').innerText = `Question ${currentQ + 1} of 8`;
+        document.getElementById('q-text').innerText = qData.q;
+
+        const optionsContainer = document.getElementById('options-list');
+        optionsContainer.innerHTML = '';
+
+        qData.options.forEach((opt) => {
+            const btn = document.createElement('div');
+            btn.className = 'option-card';
+            btn.innerText = opt.text;
+            btn.onclick = () => selectOption(opt);
+            optionsContainer.appendChild(btn);
+        });
+    }
+
+    function selectOption(opt) {
+        scores[opt.trait]++;
+        if (opt.apprehension) apprehension += opt.apprehension;
+
+        currentQ++;
+        if (currentQ < 8) {
+            renderQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById('view-quiz').classList.add('hidden');
+        document.getElementById('view-result').classList.remove('hidden');
+
+        let topTrait = 'kaya';
+        let maxScore = -1;
+        for (const [trait, score] of Object.entries(scores)) {
+            if (score > maxScore) {
+                maxScore = score;
+                topTrait = trait;
+            }
+        }
+
+        const mascot = mascots[topTrait];
+        document.getElementById('res-title').innerText = mascot.title;
+        document.getElementById('res-tagline').innerText = mascot.tagline;
+        document.getElementById('res-vibe').innerText = mascot.vibe;
+        document.getElementById('res-power').innerText = mascot.power;
+        document.getElementById('res-order').innerText = mascot.order;
+
+        if (apprehension >= 3) {
+            document.getElementById('siew-dai-tag').classList.remove('hidden');
+        } else {
+            document.getElementById('siew-dai-tag').classList.add('hidden');
+        }
+    }
+
+    function shareResult() {
+        const title = document.getElementById('res-title').innerText;
+        const text = `I got ${title} in the RIG AI VIBE CHECK! 🤖 Take the quiz to find out your AI Kopitiam mascot!`;
+        if (navigator.share) {
+            navigator.share({ title: 'RIG AI VIBE CHECK', text: text, url: window.location.href });
+        } else {
+            navigator.clipboard.writeText(text + ' ' + window.location.href);
+            alert('Result copied to clipboard! Paste it to share with friends.');
+        }
+    }
+
+    function resetQuiz() {
+        document.getElementById('view-result').classList.add('hidden');
+        document.getElementById('view-cover').classList.remove('hidden');
+    }
+</script>
+</body>
+</html>
